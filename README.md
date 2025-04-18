@@ -1,5 +1,5 @@
 # mcp-demo
-参考mcp官方文档让AI糊了一个简单的实现，包含mcp-client和两个mcp-server，支持本地文件、命令和在线server(http/sse)调用
+参考mcp官方文档I糊了一个简单的实现，包含mcp-client和两个mcp-server，支持本地文件、命令和在线server(http/sse)调用
 
 目前只适配了openai格式1，推荐搭配oneapi/newapi使用
 
