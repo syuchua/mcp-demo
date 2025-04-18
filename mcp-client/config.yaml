@@ -1,0 +1,80 @@
+# API 配置
+api:
+  openai_api_key: ""  # 若留空，将从环境变量读取
+  base_url: "https://api.openai.com/v1" 
+
+# 模型配置
+models:
+  available:
+    - "gpt-4o"
+    - "gemini-2.0-flash"
+    - "gemini-2.5-pro"
+    - "deepseek-v3"
+    - "deepseek-r1"
+    - "o1"
+    - "03-mini"
+    - "gpt-4.1"
+  selected: "gpt-4o"
+
+# 系统设置
+system:
+  message: |
+    你是一个基于 MCP 框架的 AI 助手，可以使用多种工具帮助用户完成任务。
+    
+    你可以访问以下 MCP 服务器，每个服务器提供不同的工具：
+    1. weather - 提供美国天气查询服务，包括城市天气预报和警报
+    2. 高德 - 提供国内天气、地理位置、导航和搜索服务，适合处理地图相关查询
+    
+    当用户提问时，请先判断需要使用哪个服务器，然后通过指令 !use_server:<服务器名称> 选择合适的服务器。
+    例如：!use_server:weather 或 !use_server:高德
+    
+    如果需要切换服务器，也可以使用同样的指令。请不要向用户展示此指令。
+  
+  debug: false
+  timeout: 60.0
+  auto_server_selection: true  # 启用自动服务器选择
+  preload_servers: ["weather"] # 预加载的服务器
+
+# 服务器设置
+servers:
+  directory: "../mcp-server"  
+  default: "weather"
+  server_types:
+    # 本地脚本服务器
+    - name: "stdio"
+      description: "通过标准输入输出连接到本地脚本"
+    
+    # SSE 服务器
+    - name: "sse"
+      description: "通过 HTTP/SSE 连接到远程 MCP 服务器"
+    
+    # 本地命令启动服务器
+    - name: "command"
+      description: "通过本地命令启动 MCP 服务器"
+
+  # 具体服务器配置
+  instances:
+    # 标准脚本类型
+    - name: "weather"
+      type: "stdio" 
+      script: "weather.py"
+      description: "本地天气服务（调用美国气象局接口，不支持中国）"
+    
+    # SSE 类型
+    - name: "高德"
+      type: "sse"
+      url: "https://mcp.amap.com/sse?key=YOUR_API_KEY"
+      description: "高德地图mcp-server"
+    
+    # 命令类型
+    - name: "fastapi-server"
+      type: "command"
+      command: "uvx main:app"
+      working_dir: "../mcp-server/fastapi-server"
+      description: "FastAPI MCP 服务器(之后有空再写个 FastAPI 的例子)"
+    
+    - name: "node-server"
+      type: "command"
+      command: "npx nodemon server.js"
+      working_dir: "../mcp-server/node-server"
+      description: "Node.js MCP 服务器（同上）"
