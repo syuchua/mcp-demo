@@ -1,7 +1,7 @@
 # mcp-demo
 参考mcp官方文档糊了一个简单的实现，包含mcp-client和两个mcp-server，支持本地文件、命令和在线server(http/sse)调用
 
-目前只适配了openai格式1，推荐搭配oneapi/newapi使用
+目前只适配了openai格式，推荐搭配oneapi/newapi使用
 
 环境配置
   - Python3.12（本地用的这个，其他没测试过，估计3.11,3.10也问题不大）
