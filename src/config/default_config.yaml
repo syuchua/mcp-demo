@@ -95,3 +95,14 @@ servers:
       type: "stdio"
       script: "system_tools.py"
       description: "系统工具和应用程序控制"
+
+    - name: "searxng"
+      type: "stdio"
+      command: "npx"
+      args: [
+        "-y",
+        "@kevinwatt/mcp-server-searxng"
+      ]
+      env:
+        SEARXNG_INSTANCES: "https://search.yuchu.me"
+      description: "Searxng 搜索服务（需要安装 Node.js）"
