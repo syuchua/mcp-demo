@@ -10,7 +10,6 @@ class OpenAIProvider(LLMProvider):
     
     async def initialize(self):
         """初始化 OpenAI 客户端"""
-        import httpx
         self._client = httpx.AsyncClient(
             base_url=self.base_url or "https://api.openai.com/v1",
             headers={
